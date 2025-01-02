@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect, MouseEvent, FC } from "react";
 import ReactFlow, {
   Node,
   Edge,
@@ -23,6 +23,15 @@ import {
   DrawerDescription,
   DrawerFooter,
 } from "@/components/ui/drawer";
+import {
+  FaPlaneDeparture,
+  FaHotel,
+  FaCalendarAlt,
+  FaSearch,
+  FaBalanceScale,
+  FaBookmark,
+  FaEnvelope,
+} from "react-icons/fa";
 
 interface StepParameters {
   start_date?: string;
@@ -63,6 +72,43 @@ interface PlanData {
   goal: string;
   steps: Step[];
 }
+
+// Custom styling for the nodes based on tool type
+const getNodeStyle = (tool: string) => {
+  const baseStyle =
+    "px-4 py-3 shadow-lg rounded-lg border transition-all duration-300 hover:shadow-xl";
+
+  const styles: { [key: string]: string } = {
+    TravelDatesTool: `${baseStyle} bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200`,
+    FlightSearchTool: `${baseStyle} bg-gradient-to-br from-indigo-50 to-indigo-100 border-indigo-200`,
+    FlightComparatorTool: `${baseStyle} bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200`,
+    FlightBookingTool: `${baseStyle} bg-gradient-to-br from-pink-50 to-pink-100 border-pink-200`,
+    HotelSearchTool: `${baseStyle} bg-gradient-to-br from-orange-50 to-orange-100 border-orange-200`,
+    HotelComparatorTool: `${baseStyle} bg-gradient-to-br from-amber-50 to-amber-100 border-amber-200`,
+    HotelBookingTool: `${baseStyle} bg-gradient-to-br from-green-50 to-green-100 border-green-200`,
+    EmailConfirmationTool: `${baseStyle} bg-gradient-to-br from-teal-50 to-teal-100 border-teal-200`,
+  };
+
+  return styles[tool] || baseStyle;
+};
+
+// Get icon based on tool type
+const getToolIcon = (tool: string) => {
+  const icons: { [key: string]: JSX.Element } = {
+    TravelDatesTool: <FaCalendarAlt className="w-6 h-6 text-blue-600" />,
+    FlightSearchTool: <FaPlaneDeparture className="w-6 h-6 text-indigo-600" />,
+    FlightComparatorTool: (
+      <FaBalanceScale className="w-6 h-6 text-purple-600" />
+    ),
+    FlightBookingTool: <FaBookmark className="w-6 h-6 text-pink-600" />,
+    HotelSearchTool: <FaSearch className="w-6 h-6 text-orange-600" />,
+    HotelComparatorTool: <FaBalanceScale className="w-6 h-6 text-amber-600" />,
+    HotelBookingTool: <FaHotel className="w-6 h-6 text-green-600" />,
+    EmailConfirmationTool: <FaEnvelope className="w-6 h-6 text-teal-600" />,
+  };
+
+  return icons[tool] || <FaSearch className="w-6 h-6" />;
+};
 
 const planData: PlanData = {
   goal: "Book a flight and hotel for a trip to Paris",
@@ -186,29 +232,29 @@ const planData: PlanData = {
   ],
 };
 
-const CustomNode: React.FC<NodeProps> = ({ data }) => {
+const CustomNode: FC<NodeProps> = ({ data }) => {
   return (
-    <div className="px-4 py-2 shadow-md rounded-md bg-white border-2 border-stone-400">
+    <div className={getNodeStyle(data.tool)}>
       <div className="flex flex-col">
         <div className="flex items-center">
-          <div className="rounded-full w-12 h-12 flex items-center justify-center bg-stone-100">
-            {data.icon}
+          <div className="rounded-full w-12 h-12 flex items-center justify-center bg-white/50 backdrop-blur-sm shadow-inner">
+            {getToolIcon(data.tool)}
           </div>
-          <div className="ml-2">
-            <div className="text-lg font-bold">{data.tool}</div>
-            <div className="text-gray-500">{data.description}</div>
+          <div className="ml-3">
+            <div className="text-lg font-bold text-gray-800">{data.tool}</div>
+            <div className="text-sm text-gray-600">{data.description}</div>
           </div>
         </div>
       </div>
       <Handle
         type="target"
         position={Position.Top}
-        className="w-16 !bg-teal-500"
+        className="w-16 !bg-gray-400/50 hover:!bg-gray-400"
       />
       <Handle
         type="source"
         position={Position.Bottom}
-        className="w-16 !bg-teal-500"
+        className="w-16 !bg-gray-400/50 hover:!bg-gray-400"
       />
     </div>
   );
@@ -218,7 +264,7 @@ const nodeTypes = {
   custom: CustomNode,
 };
 
-const InteractiveNodeGraph: React.FC = () => {
+const InteractiveNodeGraph: FC = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [selectedNode, setSelectedNode] = useState<Step | null>(null);
@@ -227,11 +273,20 @@ const InteractiveNodeGraph: React.FC = () => {
     console.log("flow loaded:", reactFlowInstance);
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const graph = createGraph(planData);
     setNodes(graph.nodes);
     setEdges(graph.edges);
   }, [setNodes, setEdges]);
+
+  const defaultEdgeOptions = {
+    style: {
+      strokeWidth: 2,
+      stroke: "#94a3b8", // slate-400
+    },
+    type: "smoothstep",
+    animated: true,
+  };
 
   const createGraph = (data: PlanData) => {
     const nodes: Node[] = [];
@@ -289,12 +344,12 @@ const InteractiveNodeGraph: React.FC = () => {
     return { nodes, edges };
   };
 
-  const onNodeClick = useCallback((event: React.MouseEvent, node: Node) => {
+  const onNodeClick = useCallback((event: MouseEvent, node: Node) => {
     setSelectedNode(node.data as Step);
   }, []);
 
   return (
-    <div style={{ width: "100%", height: "600px" }}>
+    <div className="w-full h-[900px] bg-gradient-to-br from-gray-50 to-gray-100">
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -303,25 +358,40 @@ const InteractiveNodeGraph: React.FC = () => {
         onNodeClick={onNodeClick}
         onInit={onInit}
         nodeTypes={nodeTypes}
+        defaultEdgeOptions={defaultEdgeOptions}
         fitView
+        className="shadow-inner"
       >
-        <Background />
-        <Controls />
+        <Background color="#94a3b8" gap={16} size={1} />
+        <Controls className="bg-white/50 backdrop-blur-sm shadow-lg rounded-lg border border-gray-200" />
       </ReactFlow>
+
       <Drawer open={!!selectedNode} onClose={() => setSelectedNode(null)}>
-        <DrawerContent>
+        <DrawerContent className="bg-gradient-to-br from-gray-50 to-gray-100">
           <DrawerHeader>
-            <DrawerTitle>{selectedNode?.tool}</DrawerTitle>
-            <DrawerDescription>{selectedNode?.description}</DrawerDescription>
+            <DrawerTitle className="flex items-center gap-2">
+              {selectedNode && getToolIcon(selectedNode.tool)}
+              <span>{selectedNode?.tool}</span>
+            </DrawerTitle>
+            <DrawerDescription className="text-gray-600">
+              {selectedNode?.description}
+            </DrawerDescription>
           </DrawerHeader>
           <div className="p-4">
-            <h3 className="text-lg font-semibold mb-2">Parameters:</h3>
-            <pre className="bg-gray-100 p-2 rounded">
+            <h3 className="text-lg font-semibold mb-2 text-gray-800">
+              Parameters:
+            </h3>
+            <pre className="bg-white/50 backdrop-blur-sm p-4 rounded-lg border border-gray-200 shadow-inner overflow-auto">
               {JSON.stringify(selectedNode?.parameters, null, 2)}
             </pre>
           </div>
           <DrawerFooter>
-            <Button onClick={() => setSelectedNode(null)}>Close</Button>
+            <Button
+              onClick={() => setSelectedNode(null)}
+              className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white shadow-lg"
+            >
+              Close
+            </Button>
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
