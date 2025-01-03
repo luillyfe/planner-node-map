@@ -101,7 +101,7 @@ export const PLAN_DATA = {
         max_price: 200.0,
         refundable_only: true,
       },
-      dependencies: [],
+      dependencies: ["TravelDatesTool"],
     },
     {
       description: "Compare and rank hotel options",
@@ -129,7 +129,7 @@ export const PLAN_DATA = {
           currency: "EUR",
         },
       },
-      dependencies: ["HotelComparatorTool", "TravelDatesTool"],
+      dependencies: ["HotelComparatorTool"],
     },
     {
       description: "Send email confirmation for the flight booking",
