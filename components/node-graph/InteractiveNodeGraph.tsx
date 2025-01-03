@@ -53,9 +53,19 @@ const InteractiveNodeGraph: FC = () => {
         defaultEdgeOptions={DEFAULT_EDGE_OPTIONS}
         fitView
         className="shadow-inner rounded-xl"
+        minZoom={0.5}
+        maxZoom={1.5}
       >
-        <Background color="#94a3b8" gap={24} size={1} className="bg-white/50" />
-        <Controls className="bg-white/80 backdrop-blur-sm shadow-lg rounded-xl border border-gray-200" />
+        <Background
+          color="#94a3b8"
+          gap={24}
+          size={1.5}
+          className="bg-white/50"
+        />
+        <Controls
+          className="bg-white/80 backdrop-blur-sm shadow-lg rounded-xl border border-gray-200 p-2"
+          showInteractive={false}
+        />
       </ReactFlow>
 
       <NodeDrawer

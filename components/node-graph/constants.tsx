@@ -7,6 +7,7 @@ import {
   FaBookmark,
   FaEnvelope,
 } from "react-icons/fa";
+import { MarkerType } from "reactflow";
 
 export const TOOL_ICONS = {
   TravelDatesTool: <FaCalendarAlt className="w-6 h-6 text-blue-600" />,
@@ -21,11 +22,15 @@ export const TOOL_ICONS = {
 
 export const DEFAULT_EDGE_OPTIONS = {
   style: {
-    strokeWidth: 2,
+    strokeWidth: 3,
     stroke: "#94a3b8",
   },
   type: "smoothstep",
   animated: true,
+  markerEnd: {
+    type: MarkerType.ArrowClosed,
+    color: "#94a3b8",
+  },
 };
 
 export const PLAN_DATA = {
