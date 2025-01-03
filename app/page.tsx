@@ -1,4 +1,4 @@
-import InteractiveNodeGraph from "@/components/InteractiveNodeGraph";
+import { InteractiveNodeGraph } from "@/components/node-graph";
 
 export default function Home() {
   return (
