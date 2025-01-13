@@ -21,7 +21,7 @@ export const createGraph = (data: PlanData) => {
 
   // Create edges
   data.steps.forEach((step) => {
-    step.dependencies.forEach((dep) => {
+    step.dependencies?.forEach((dep) => {
       edges.push({
         id: `${dep}-${step.tool}`,
         source: dep,
@@ -35,7 +35,7 @@ export const createGraph = (data: PlanData) => {
   // Adjust node positions based on dependencies
   const adjustNodePositions = () => {
     data.steps.forEach((step) => {
-      if (step.dependencies.length > 0) {
+      if (step.dependencies?.length > 0) {
         const avgX =
           step.dependencies.reduce(
             (sum, dep) => sum + nodePositions[dep].x,
