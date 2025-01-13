@@ -25,15 +25,15 @@ export default function Home() {
     <>
       <meta
         property="og:image"
-        content="https://planner-node-map.vercel.app/api/static"
+        content="https://planner-node-map.vercel.app/api/og"
       ></meta>
       <meta
         property="twitter:image"
-        content="https://planner-node-map.vercel.app/api/static"
+        content="https://planner-node-map.vercel.app/api/og"
       ></meta>
       <meta
         property="twitter:card"
-        content="https://planner-node-map.vercel.app/api/static"
+        content="https://planner-node-map.vercel.app/api/og"
       ></meta>
       <main className="flex min-h-screen flex-col items-center justify-between p-24">
         <div className="w-full max-w-7xl flex justify-between items-start mb-8">
