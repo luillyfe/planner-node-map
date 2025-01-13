@@ -26,18 +26,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <meta
-        property="og:image"
-        content="https://planner-node-map.vercel.app/api/static"
-      ></meta>
-      <meta
-        property="twitter:image"
-        content="https://planner-node-map.vercel.app/api/static"
-      ></meta>
-      <meta
-        property="twitter:card"
-        content="https://planner-node-map.vercel.app/api/static"
-      ></meta>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

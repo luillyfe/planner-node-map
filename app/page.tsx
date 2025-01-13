@@ -22,14 +22,40 @@ export default function Home() {
     reader.readAsText(file);
   };
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="w-full max-w-7xl flex justify-between items-start mb-8">
-        <h1 className="text-4xl font-bold max-w-3xl">
-          Book a flight and hotel for a trip to Paris
-        </h1>
-        <FileUploader onFileUpload={handleFileUpload} />
-      </div>
-      <InteractiveNodeGraph {...planData} />
-    </main>
+    <>
+      <meta
+        property="og:image"
+        content="https://planner-node-map.vercel.app/api/og"
+      ></meta>
+      <meta property="og:site_name" content="Planner Node Map"></meta>
+      <meta property="og:title" content="Planner Node Map"></meta>
+      <meta
+        property="og:description"
+        content="Translates a generated plan to a visual appealing react flow map"
+      />
+      <meta property="twitter:title" content="Planner Node Map"></meta>
+      <meta
+        property="og:url"
+        content="https://planner-node-map.vercel.app/"
+      ></meta>
+      <meta
+        property="twitter:description"
+        content="Translates a generated plan to a visual appealing react flow map"
+      ></meta>
+      <meta
+        property="twitter:image"
+        content="https://planner-node-map.vercel.app/api/og"
+      ></meta>
+      <meta property="twitter:card" content="summary"></meta>
+      <main className="flex min-h-screen flex-col items-center justify-between p-24">
+        <div className="w-full max-w-7xl flex justify-between items-start mb-8">
+          <h1 className="text-4xl font-bold max-w-3xl">
+            Book a flight and hotel for a trip to Paris
+          </h1>
+          <FileUploader onFileUpload={handleFileUpload} />
+        </div>
+        <InteractiveNodeGraph {...planData} />
+      </main>
+    </>
   );
 }
