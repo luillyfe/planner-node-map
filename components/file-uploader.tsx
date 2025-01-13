@@ -2,7 +2,7 @@
 
 import React, { useState, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
-import { motion } from "framer-motion";
+import { motion, HTMLMotionProps } from "framer-motion";
 import { Upload, CheckCircle } from "lucide-react";
 
 interface FileUploaderProps {
@@ -32,14 +32,14 @@ export const FileUploader: React.FC<FileUploaderProps> = ({ onFileUpload }) => {
   return (
     <div className="w-40">
       <motion.div
-        {...getRootProps()}
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
         className={`border-2 border-dashed rounded-lg p-2 text-center cursor-pointer transition-colors ${
           isDragActive
             ? "border-blue-500 bg-blue-50"
             : "border-gray-300 hover:border-gray-400"
         }`}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
+        {...(getRootProps() as HTMLMotionProps<"div">)}
       >
         <input {...getInputProps()} />
         <motion.div
