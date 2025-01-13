@@ -1,4 +1,5 @@
 import { InteractiveNodeGraph } from "@/components/node-graph";
+import planData from "@/data/planData.json";
 
 export default function Home() {
   return (
@@ -6,7 +7,7 @@ export default function Home() {
       <h1 className="text-4xl font-bold mb-8">
         Book a flight and hotel for a trip to Paris
       </h1>
-      <InteractiveNodeGraph />
+      <InteractiveNodeGraph {...planData} />
     </main>
   );
 }

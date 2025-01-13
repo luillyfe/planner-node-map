@@ -13,15 +13,15 @@ import "reactflow/dist/style.css";
 
 import { CustomNode } from "./CustomNode";
 import { NodeDrawer } from "./NodeDrawer";
-import { DEFAULT_EDGE_OPTIONS, PLAN_DATA } from "./constants";
+import { DEFAULT_EDGE_OPTIONS } from "./constants";
 import { createGraph } from "./utils";
-import { Step } from "./types";
+import { PlanData, Step } from "./types";
 
 const nodeTypes = {
   custom: CustomNode,
 };
 
-const InteractiveNodeGraph: FC = () => {
+const InteractiveNodeGraph: FC<PlanData> = (data) => {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [selectedNode, setSelectedNode] = useState<Step | null>(null);
@@ -31,10 +31,10 @@ const InteractiveNodeGraph: FC = () => {
   }, []);
 
   useEffect(() => {
-    const graph = createGraph(PLAN_DATA);
+    const graph = createGraph(data);
     setNodes(graph.nodes);
     setEdges(graph.edges);
-  }, [setNodes, setEdges]);
+  }, [setNodes, setEdges, data]);
 
   const onNodeClick = useCallback((event: MouseEvent, node: Node) => {
     setSelectedNode(node.data as Step);
