@@ -27,14 +27,16 @@ export default function Home() {
         property="og:image"
         content="https://planner-node-map.vercel.app/api/og"
       ></meta>
+      <meta property="twitter:title" content="Planner Node Map"></meta>
+      <meta
+        property="twitter:description"
+        content="Translate a generated plan to a visual appealing react flow map"
+      ></meta>
       <meta
         property="twitter:image"
         content="https://planner-node-map.vercel.app/api/og"
       ></meta>
-      <meta
-        property="twitter:card"
-        content="https://planner-node-map.vercel.app/api/og"
-      ></meta>
+      <meta property="twitter:card" content="Summary"></meta>
       <main className="flex min-h-screen flex-col items-center justify-between p-24">
         <div className="w-full max-w-7xl flex justify-between items-start mb-8">
           <h1 className="text-4xl font-bold max-w-3xl">
