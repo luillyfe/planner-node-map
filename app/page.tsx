@@ -27,10 +27,20 @@ export default function Home() {
         property="og:image"
         content="https://planner-node-map.vercel.app/api/og"
       ></meta>
+      <meta property="og:site_name" content="Planner Node Map"></meta>
+      <meta property="og:title" content="Planner Node Map"></meta>
+      <meta
+        property="og:description"
+        content="Translates a generated plan to a visual appealing react flow map"
+      />
       <meta property="twitter:title" content="Planner Node Map"></meta>
       <meta
+        property="og:url"
+        content="https://planner-node-map.vercel.app/"
+      ></meta>
+      <meta
         property="twitter:description"
-        content="Translate a generated plan to a visual appealing react flow map"
+        content="Translates a generated plan to a visual appealing react flow map"
       ></meta>
       <meta
         property="twitter:image"
